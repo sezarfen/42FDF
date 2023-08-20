@@ -1,64 +1,45 @@
 #include "fdf.h"
 
-void	draw_line_in(int x1, int y1, int x2, int y2, void *mlx, void *win)
+void	bresenham(float x1, float y1, float x2, float y2, t_data *data)
 {
-	int slope = abs(y2 - y1) / abs(x2 - x1);
-	int temp_slope = slope;
-	if (slope == 0)
-		slope = 1;
-	if (x1 < x2)
-	{
-		while (x1 < x2)
-		{
-			if (y1 < y2)
-			{
-				mlx_pixel_put(mlx, win, x1++, y1, 0XFFFFFF);
-				while (temp_slope--)
-					mlx_pixel_put(mlx, win, x1, y1++, 0XFFFFFF);
-				temp_slope = slope;
-			}
-			else
-			{
-				mlx_pixel_put(mlx, win, x1++, y2, 0XFFFFFF);
-				while (temp_slope--)
-					mlx_pixel_put(mlx, win, x1, y2++, 0XFFFFFF);
-				temp_slope = slope;
-			}
-		}
-	}
-	else
-	{
-		while (x2 < x1)
-		{
-			if (y1 < y2)
-			{
-				mlx_pixel_put(mlx, win, x2++, y1, 0XFFFFFF);
-				while (temp_slope--)
-					mlx_pixel_put(mlx, win, x2, y1++, 0XFFFFFF);
-				temp_slope = slope;
-			}
-			else
-			{
-				mlx_pixel_put(mlx, win, x2++, y2, 0XFFFFFF);
-				while (temp_slope--)
-					mlx_pixel_put(mlx, win, x2, y2++, 0XFFFFFF);
-				temp_slope = slope;
-			}
-		}
-	}
-}
-/*
-int main(int ac, char **av)
-{
-	void	*mlx;
-	void	*win;
+	float	dx; // change in x
+	float	dy; // change in y
+	int	cmax; // maximum change
 
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 900, 900, "New Window");
-
-	draw_line_in(ft_atoi(av[1]), ft_atoi(av[2]), ft_atoi(av[3]), ft_atoi(av[4]), mlx, win);
+	dx = x2 - x1; // dx ve dy
+	dy = y2 - y1; // bu kısımda negative olabilirler
+	cmax = max(abs(dx), abs(dy)); // burada değişim olarak absolute değerlerini dikkate alacağız
 	
-	mlx_loop(mlx);
+	dx = dx / cmax;
+	dy = dy / cmax;
+	while (x1 < x2 || abs(y1 - y2) > 0)
+	{
+		mlx_pixel_put(data->mlx, data->win, x1, y1, 0xffffff);
+		x1 += dx;
+		y1 += dy;
+	}
 }
-*/
-// (x1, y1) -> (x2, y2)
+
+void	connect_indexes(t_data *data)
+{
+	int	h;
+	int	w;
+	int	s;
+
+	s = data->starter;
+	h = 0;
+	w = 0;
+	while (h < data->maph) // data->starter burada da olmalı ki, başlagınçta direkt data->maph yi geçmesin
+	{
+		while (w < data->mapw)
+		{
+			if (w != data->mapw - 1) // sağa doğru çizgi
+				bresenham(w * s, h * s, (w + 1) * s, h * s, data);
+			if (h != data->maph - 1) // aşağı doğru çizgi
+				bresenham(w * s, h * s, w * s, (h + 1) * s, data);
+			w++;
+		}
+		w = 0;
+		h++;
+	}
+}

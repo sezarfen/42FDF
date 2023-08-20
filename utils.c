@@ -24,3 +24,10 @@ void	free_split(char **split)
 	free(split);
 	split = NULL;
 }
+
+int max(int a, int b)
+{
+	if (a >= b)
+		return (a);
+	return (b);
+}

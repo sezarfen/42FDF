@@ -22,9 +22,16 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 
+	void	*mlx;
+	void	*win;
+
 	int		**map;
 	int		mapw;
 	int		maph;
+	
+	int		starter;
+	int		len_x;
+	int		len_y;
 }			t_data;
 
 int		split_len(char **split);
@@ -34,5 +41,7 @@ int		get_map_height(char *file_name);
 int		get_map_width(char *file_name);
 void	set_indexes(int *map_line, char *newline);
 void	set_map(t_data *data, char *file_name, int i, int fd);
+int 	max(int a, int b);
+void	connect_indexes(t_data *data);
 
 #endif

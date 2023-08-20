@@ -27,6 +27,7 @@ t_data *read_map(char *file_name)
 	data = malloc(sizeof(t_data));
 	data->mapw = get_map_width(file_name);
 	data->maph = get_map_height(file_name);
+	ft_printf("current maph :%d\n", data->maph);
 	data->map = malloc(sizeof(int *) * data->maph);
 	i = 0;
 	while (i < data->maph)
