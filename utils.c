@@ -42,3 +42,30 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 		*(unsigned int*)dst = color;
 	}
 }
+
+int	get_map_dz(t_data *data)
+{
+	int	i;
+	int	j;
+	int	min;
+	int max;
+
+	i = 0;
+	j = 0;
+	min = data->map[i][j];
+	max = data->map[i][j];
+	while (i < data->maph)
+	{
+		while (j < data->mapw)
+		{
+			if (max < data->map[i][j])
+				max = data->map[i][j];
+			if (min > data->map[i][j])
+				min = data->map[i][j];
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (max - min);
+}

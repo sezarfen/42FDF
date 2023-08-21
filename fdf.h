@@ -30,11 +30,14 @@ typedef struct	s_data {
 	int		mapw;
 	int		maph;
 	
+
 	int		zoom;
 	int		shiftx;
 	int		shifty;
 	int		color;
 	double	angle;
+	int		mode;
+	int		z_zoom;
 }			t_data;
 
 int		split_len(char **split);
@@ -51,5 +54,5 @@ void	isometric(float *x, float *y, float *z, t_data *data);
 void	parallel(float *x, float *y, float *z, t_data *data);
 void 	conic(float *x, float *y, float *z, t_data *data);
 void	bresenham(float x1, float y1, float x2, float y2, t_data *data);
-
+int		get_map_dz(t_data *data);
 #endif

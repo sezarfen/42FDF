@@ -30,8 +30,10 @@ void	init_values(t_data *data)
 	data->angle = 0.8;
 	data->zoom = 10;
 	data->color = 0;
-	data->shiftx = 150;
+	data->shiftx = 400;
 	data->shifty = 150;
+	data->mode = 0;
+	data->z_zoom = 1;
 	printf("data angle-> %.2f\n", data->angle);
 }
 
@@ -57,9 +59,9 @@ int handle_key(int keycode, t_data *data)
 	if (keycode == 13)
 		data->shifty -= 30;
 	if (keycode == 12)
-		data->angle += 0.1;
+		data->mode += 1;
 	if (keycode == 14)
-		data->angle -= 0.1;
+		data->z_zoom += 2;
 	destroy_and_set(data);
 	return (0);
 }
@@ -72,6 +74,7 @@ int main(int ac, char **av)
 	init_values(data);
 	set_image_and_connect_indexes(data);
 	mlx_hook(data->win, 2, 1L << 0 , handle_key, data);
+	mlx_hook(data->win, 16, 1L << 0 , handle_key, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

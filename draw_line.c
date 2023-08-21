@@ -11,10 +11,14 @@ void	zoom(float *x1, float *y1, float *x2, float *y2, t_data *data)
 
 void	change_color(int z, t_data *data)
 {
+	int	dz;
+
+	dz = get_map_dz(data);
+
 	if (z == 0)
-		data->color = 0XFFFFFF;
+		data->color = 0X0AFF00;
 	else
-		data->color =  z * 0x00FF00;
+		data->color =  pow(z, 2) * 0x00FF00;
 }
 
 void	bresenham(float x1, float y1, float x2, float y2, t_data *data)
@@ -29,11 +33,29 @@ void	bresenham(float x1, float y1, float x2, float y2, t_data *data)
 	z2 = data->map[((int)y2)][((int)x2)];
 	// --zoom--
 	zoom(&x1, &y1, &x2, &y2, data);
+	z1 *= data->z_zoom;
+	z2 *= data->z_zoom;
 	// --color--
 	change_color(z1, data);
 	// --isometric projection (3D)--
-	isometric(&x1, &y1, &z1, data);
-	isometric(&x2, &y2, &z2, data);
+
+
+	if (data->mode % 3 == 0)
+	{
+		isometric(&x1, &y1, &z1, data);
+		isometric(&x2, &y2, &z2, data);
+	}
+	else if (data->mode % 3 == 1)
+	{
+		parallel(&x1, &y1, &z1, data);
+		parallel(&x2, &y2, &z2, data);
+	}
+	else if (data->mode % 3 == 2)
+	{
+		conic(&x1, &y1, &z1, data);
+		conic(&x2, &y2, &z2, data);
+	}
+
 	// --shifting--
 	x1 += data->shiftx;
 	y1 += data->shifty;
