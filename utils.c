@@ -31,3 +31,14 @@ int max(int a, int b)
 		return (a);
 	return (b);
 }
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	if ((x < data->winx && x > 0) && (y < data->winy && y > 0)) // bu sayede dışarı taşan pixeller çizdirilmiyor
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
+}

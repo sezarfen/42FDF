@@ -18,31 +18,60 @@ void	print_map(t_data *data)
 		j = 0;
 		i++;
 	}
-	ft_printf("height -> %d\n width -> %d", data->maph, data->mapw);
+	ft_printf("height -> %d\nwidth -> %d", data->maph, data->mapw);
 }
 
 void	init_values(t_data *data)
 {
-	data->starter = 20;
-	data->len_x = 20;
-	data->len_y = 20;
+	data->winx = 1920;
+	data->winy = 1080;
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, data->winx, data->winy, "fdf");
+	data->angle = 0.8;
+	data->zoom = 10;
+	data->color = 0;
+	data->shiftx = 150;
+	data->shifty = 150;
+	printf("data angle-> %.2f\n", data->angle);
+}
+
+void	destroy_and_set(t_data *data)
+{
+	mlx_destroy_image(data->mlx, data->img);
+	set_image_and_connect_indexes(data);
+	mlx_do_sync(data->mlx);
+}
+
+int handle_key(int keycode, t_data *data)
+{
+	if (keycode == 126)
+		data->zoom += 5;
+	if (keycode == 125)
+		data->zoom -= 5;
+	if (keycode == 0)
+		data->shiftx -= 30;
+	if (keycode == 2)
+		data->shiftx += 30;
+	if (keycode == 1)
+		data->shifty += 30;
+	if (keycode == 13)
+		data->shifty -= 30;
+	if (keycode == 12)
+		data->angle += 0.1;
+	if (keycode == 14)
+		data->angle -= 0.1;
+	destroy_and_set(data);
+	return (0);
 }
 
 int main(int ac, char **av)
 {
 	t_data *data;
 
-	// 1. dosyayı oku
 	data = read_map(av[1]); // if there is av[1] (check that later)
-	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, 1000, 900, "fdf");
-
 	init_values(data);
-	// 2. bresenham kullanarak komşu indexler arasında çizgi çiz
-	connect_indexes(data);
-
-	// 3. isometrik görüntüyü ayarla
-	
+	set_image_and_connect_indexes(data);
+	mlx_hook(data->win, 2, 1L << 0 , handle_key, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
