@@ -15,7 +15,7 @@ t_data *read_map(char *file_name)
 		data->map[i++] = malloc(sizeof(int) * data->mapw);
 	i = 0;
 	fd = open(file_name, O_RDONLY);
-	set_map(data, file_name, 0, fd);
+	set_map(data, 0, fd);
 	close(fd);
 	return (data); 
 }
@@ -60,7 +60,7 @@ int	get_map_height(char *file_name)
 	return (len);
 }
 
-void	set_map(t_data *data, char *file_name, int i, int fd)
+void	set_map(t_data *data, int i, int fd)
 {
 	char	*newline;
 	char	**split;
