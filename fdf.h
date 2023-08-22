@@ -10,34 +10,29 @@
 # include "ft_printf/ft_printf.h"
 # include "minilibx_macos/mlx.h"
 
-# define HEIGHT 800
-# define WIDTH 1000
-
 typedef struct	s_data {
-
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-
 	void	*mlx;
 	void	*win;
 	int		winx;
 	int		winy;
-
 	int		**map;
 	int		mapw;
 	int		maph;
-	
-
+	int		**colors;
 	int		zoom;
 	int		shiftx;
 	int		shifty;
 	int		color;
+	int		change_color;
 	double	angle;
 	int		mode;
 	int		z_zoom;
+	void	*infoimg;
 }			t_data;
 
 int		split_len(char **split);
@@ -54,5 +49,14 @@ void	isometric(float *x, float *y, float *z, t_data *data);
 void	parallel(float *x, float *y, float *z, t_data *data);
 void 	conic(float *x, float *y, float *z, t_data *data);
 void	bresenham(float x1, float y1, float x2, float y2, t_data *data);
-int		get_map_dz(t_data *data);
+int		get_max_z(t_data *data);
+int		get_min_z(t_data *data);
+void	init_colors(t_data *data);
+int		set_color(float z, t_data *data);
+void	check_up(int ac, char **av);
+void	zoom(float *x1, float *y1, float *x2, float *y2, t_data *data);
+void	set_indexes(float *x1, float *y1, float *x2, float *y2, t_data *data);
+void	zoom_z(float *z1, float *z2, t_data *data);
+void	set_info_page(t_data *data);
+
 #endif

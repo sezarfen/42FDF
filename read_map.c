@@ -1,23 +1,5 @@
 #include "fdf.h"
-/*
-0 0 0 0 0  0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | Height -> data->maph
-0 0 0 0 0  0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 
-0 0 0 0 0 10 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 
-0 0 0 0 0 10 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 
-0 0 0 0 0 10 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
-0 0 0 0 0 10  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
-0 0 0 0 0 10 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
-0 0 0 0 0 10 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
-0 0 0 0 0  0 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
-- - - - - - - - - - - - - - - - - - - - - 
-			Weight = data->mapw
-// extract 1 newline
-// ft_split(newline, ' ');
-// -> "0", "0", "0" ... <- we need to check split_len
-*/
 
-// İşlemleri dosya varmış gibi yapalım, dosyanın açılıp açılmadığına sonra bakarız
-// ve düzgün bir şekilde okunabilir mi?
 t_data *read_map(char *file_name)
 {
 	t_data *data;
@@ -27,7 +9,6 @@ t_data *read_map(char *file_name)
 	data = malloc(sizeof(t_data));
 	data->mapw = get_map_width(file_name);
 	data->maph = get_map_height(file_name);
-	ft_printf("current maph :%d\n", data->maph);
 	data->map = malloc(sizeof(int *) * data->maph);
 	i = 0;
 	while (i < data->maph)

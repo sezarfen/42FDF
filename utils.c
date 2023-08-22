@@ -36,23 +36,25 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if ((x < data->winx && x > 0) && (y < data->winy && y > 0)) // bu sayede dışarı taşan pixeller çizdirilmiyor
+	
+	if ((x < data->winx - 300 && x > 0) && (y < data->winy && y > 0)) // bu sayede dışarı taşan pixeller çizdirilmiyor
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
+		if (data->zoom > 0)
+		{
+			dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+			*(unsigned int*)dst = color;
+		}
 	}
 }
 
-int	get_map_dz(t_data *data)
+int	get_max_z(t_data *data)
 {
 	int	i;
 	int	j;
-	int	min;
-	int max;
+	int	max;
 
 	i = 0;
 	j = 0;
-	min = data->map[i][j];
 	max = data->map[i][j];
 	while (i < data->maph)
 	{
@@ -60,12 +62,33 @@ int	get_map_dz(t_data *data)
 		{
 			if (max < data->map[i][j])
 				max = data->map[i][j];
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return (max);
+}
+
+int	get_min_z(t_data *data)
+{
+	int	i;
+	int	j;
+	int	min;
+
+	i = 0;
+	j = 0;
+	min = data->map[i][j];
+	while (i < data->maph)
+	{
+		while (j < data->mapw)
+		{
 			if (min > data->map[i][j])
 				min = data->map[i][j];
 			j++;
 		}
-		j = 0;
 		i++;
+		j = 0;
 	}
-	return (max - min);
+	return (min);
 }

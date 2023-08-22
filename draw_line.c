@@ -1,71 +1,34 @@
 #include "fdf.h"
 
-void	zoom(float *x1, float *y1, float *x2, float *y2, t_data *data)
+void	set_projection(float *x, float *y, float *z, t_data *data)
 {
-	// --zoom-- (30)    // default    	   zoomed
-	*x1 *= data->zoom;	// 10         ->    300
-	*x2 *= data->zoom;	// 10         ->    300
-	*y1 *= data->zoom;	// 100        ->    3000
-	*y2 *= data->zoom;	// 200        ->    3000
-}
-
-void	change_color(int z, t_data *data)
-{
-	int	dz;
-
-	dz = get_map_dz(data);
-
-	if (z == 0)
-		data->color = 0X0AFF00;
-	else
-		data->color =  pow(z, 2) * 0x00FF00;
+	if (data->mode % 3 == 0)
+		isometric(x, y, z, data);
+	else if (data->mode % 3 == 1)
+		parallel(x, y, z, data);
+	else if (data->mode % 3 == 2)
+		conic(x, y, z, data);
 }
 
 void	bresenham(float x1, float y1, float x2, float y2, t_data *data)
 {
-	float	dx; 	// change in x
-	float	dy; 	// change in y
-	int		cmax;	// maximum change
-	float		z1;
-	float		z2;
+	float	dx;
+	float	dy;
+	float	z1;
+	float	z2;
+	int		cmax;
 
 	z1 = data->map[((int)y1)][((int)x1)];
 	z2 = data->map[((int)y2)][((int)x2)];
-	// --zoom--
+	data->color = data->colors[((int)y1)][((int)x1)];
 	zoom(&x1, &y1, &x2, &y2, data);
-	z1 *= data->z_zoom;
-	z2 *= data->z_zoom;
-	// --color--
-	change_color(z1, data);
-	// --isometric projection (3D)--
-
-
-	if (data->mode % 3 == 0)
-	{
-		isometric(&x1, &y1, &z1, data);
-		isometric(&x2, &y2, &z2, data);
-	}
-	else if (data->mode % 3 == 1)
-	{
-		parallel(&x1, &y1, &z1, data);
-		parallel(&x2, &y2, &z2, data);
-	}
-	else if (data->mode % 3 == 2)
-	{
-		conic(&x1, &y1, &z1, data);
-		conic(&x2, &y2, &z2, data);
-	}
-
-	// --shifting--
-	x1 += data->shiftx;
-	y1 += data->shifty;
-	x2 += data->shiftx;
-	y2 += data->shifty;
-
-	dx = x2 - x1; // dx ve dy
-	dy = y2 - y1; // bu kısımda negative olabilirler
-	cmax = max(fabs(dx), fabs(dy)); // burada değişim olarak absolute değerlerini dikkate alacağız
-	
+	zoom_z(&z1, &z2, data);
+	set_projection(&x1, &y1, &z1, data);
+	set_projection(&x2, &y2, &z2, data);
+	set_indexes(&x1, &y1, &x2, &y2, data);
+	dx = x2 - x1;
+	dy = y2 - y1;
+	cmax = max(fabs(dx), fabs(dy));
 	dx = dx / cmax;
 	dy = dy / cmax;
 	while ((int)(x1 - x2)|| (int)(y1 - y2))
@@ -100,8 +63,8 @@ void	connect_indexes(t_data *data)
 
 void	set_image_and_connect_indexes(t_data *data)
 {
-	data->img = mlx_new_image(data->mlx, 1920, 1080);
+	data->img = mlx_new_image(data->mlx, 1620, 1080);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
 	connect_indexes(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 300, 0);
 }
