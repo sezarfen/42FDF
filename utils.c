@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdundar <fdundar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/23 16:31:21 by fdundar           #+#    #+#             */
+/*   Updated: 2023/08/23 16:47:28 by fdundar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	split_len(char **split)
@@ -18,31 +30,22 @@ void	free_split(char **split)
 	while (i >= 0)
 	{
 		free(split[i]);
-		split[i] = NULL;
 		i--;
 	}
 	free(split);
-	split = NULL;
-}
-
-int max(int a, int b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	
-	if ((x < data->winx - 300 && x > 0) && (y < data->winy && y > 0)) // bu sayede dışarı taşan pixeller çizdirilmiyor
+	if ((x < data->winx - 300 && x > 0) && (y < data->winy && y > 0))
 	{
 		if (data->zoom > 0)
 		{
-			dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-			*(unsigned int*)dst = color;
+			dst = data->addr + 
+				(y * data->line_length + x * (data->bits_per_pixel / 8));
+			*(unsigned int *)dst = color;
 		}
 	}
 }

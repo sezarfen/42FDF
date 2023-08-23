@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   projections.c                                      :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdundar <fdundar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 16:31:18 by fdundar           #+#    #+#             */
-/*   Updated: 2023/08/23 16:45:28 by fdundar          ###   ########.fr       */
+/*   Created: 2023/08/23 16:31:10 by fdundar           #+#    #+#             */
+/*   Updated: 2023/08/23 17:17:43 by fdundar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	isometric(float *x, float *y, float *z, t_data *data)
+void	free_map(t_data *data)
 {
-	*x = (*x - *y) * cos(data->angle);
-	*y = (*x + *y) * cos(data->angle) - *z;
+	int	i;
+
+	i = 0;
+	while (i < data->maph)
+		free(data->map[i++]);
+	free(data->map);
 }
 
-void	parallel(float *x, float *y, float *z, t_data *data)
+void	free_colors(t_data *data)
 {
-	*x = *x + (*z * cos(data->angle));
-	*y = *y + (*z * sin(data->angle));
+	int	i;
+
+	i = 0;
+	while (i < data->maph)
+		free(data->colors[i++]);
+	free(data->colors);
 }
 
-void	set_projection(float *x, float *y, float *z, t_data *data)
+void	free_all(t_data *data)
 {
-	if (data->mode % 2 == 0)
-		isometric(x, y, z, data);
-	else
-		parallel(x, y, z, data);
+	free(data->img);
+	free(data->addr);
+	free_map(data);
+	free_colors(data);
+	free(data);
 }

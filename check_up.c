@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_up.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdundar <fdundar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/23 16:31:04 by fdundar           #+#    #+#             */
+/*   Updated: 2023/08/23 16:33:47 by fdundar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	check_more(int fd, int slen)
@@ -18,19 +30,19 @@ void	check_more(int fd, int slen)
 			free_split(split);
 			exit(1);
 		}
-		free(split);
+		free_split(split); 
 		free(newline);
 		newline = get_next_line(fd);
 	}
+	close(fd);
 }
 
 void	check_lines(char **av)
 {
-	int 	fd;
+	int		fd;
 	char	*newline;
 	char	**split;
 	int		slen;
-	int		temp_len;
 
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
@@ -48,21 +60,22 @@ void	check_lines(char **av)
 	check_more(fd, slen);
 }
 
-void	check_up(int ac, char **av)
+void	check_up(char **av)
 {
 	char	*str;
-	
-	if (ft_strlen(av[1]) == 14)
+	int		i;
+
+	str = ft_strnstr(av[1], ".fdf", ft_strlen(av[1]));
+	i = ft_strlen(av[1]) - ft_strlen(str) - 1;
+	if (!av[1][i] || av[1][i] == '/')
 	{
 		ft_printf("ghost file, are you Casper?\n");
 		exit(1);
 	}
-	str = ft_strnstr(av[1], ".fdf", ft_strlen(av[1]));
-	if (!str || ft_strlen(str) != 4) // str var mı ve de .fdf ile direkt olarak bitmiş mi
+	if (!str || ft_strlen(str) != 4)
 	{
 		ft_printf("Wrong file format, should be and with ..[.fdf]\n");
 		exit(1);
 	}
-	// haritadaki line eleman sayısı aynı mı?
 	check_lines(av);
 }
