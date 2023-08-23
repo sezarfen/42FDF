@@ -67,7 +67,7 @@ void	check_up(char **av)
 
 	str = ft_strnstr(av[1], ".fdf", ft_strlen(av[1]));
 	i = ft_strlen(av[1]) - ft_strlen(str) - 1;
-	if (!av[1][i] || av[1][i] == '/')
+	if (i < 0 || av[1][i] == '/')
 	{
 		ft_printf("ghost file, are you Casper?\n");
 		exit(1);
