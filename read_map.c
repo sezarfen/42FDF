@@ -25,7 +25,6 @@ t_data	*read_map(char *file_name)
 	i = 0;
 	while (i < data->maph)
 		data->map[i++] = malloc(sizeof(int) * data->mapw);
-	i = 0;
 	fd = open(file_name, O_RDONLY);
 	set_map(data, 0, fd);
 	close(fd);
