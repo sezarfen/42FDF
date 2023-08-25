@@ -19,6 +19,9 @@ You can change the projection version by your desire !
 
 <img width="2032" alt="screen_shot_2023-08-25_2" src="https://github.com/sezarfen/42FDF/assets/110563468/93476982-b455-49c9-b13d-7ae87f8573ed">
 
+Sample given map 
+
+<img width="691" alt="screen_shot_2023-08-25_3" src="https://github.com/sezarfen/42FDF/assets/110563468/a07b837e-af06-40bc-8f64-d1e8e00afbed">
 
 ## Don't forget to compile with thoose libraries
 
