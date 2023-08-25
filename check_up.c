@@ -66,15 +66,15 @@ void	check_up(char **av)
 	int		i;
 
 	str = ft_strnstr(av[1], ".fdf", ft_strlen(av[1]));
+	if (!str || ft_strlen(str) != 4)
+	{
+		ft_printf("Wrong file format, should be and with ..[.fdf]\n");
+		exit(1);
+	}
 	i = ft_strlen(av[1]) - ft_strlen(str) - 1;
 	if (i < 0 || av[1][i] == '/')
 	{
 		ft_printf("ghost file, are you Casper?\n");
-		exit(1);
-	}
-	if (!str || ft_strlen(str) != 4)
-	{
-		ft_printf("Wrong file format, should be and with ..[.fdf]\n");
 		exit(1);
 	}
 	check_lines(av);
