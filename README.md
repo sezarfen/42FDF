@@ -13,8 +13,11 @@ You can change the projection version by your desire !
 
 ## Some sample pictures from project
 
-...
+![fdf1](https://github.com/sezarfen/42FDF/assets/110563468/9c066dc5-2956-41a4-96c5-4023741f07a2)
 
+![fdf2](https://github.com/sezarfen/42FDF/assets/110563468/3215228c-afc9-4de7-831f-ac02ac25091a)
+
+![fdf3](https://github.com/sezarfen/42FDF/assets/110563468/1026ffa7-17c4-47e5-88ae-223819220087)
 
 Sample given map 
 
