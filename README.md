@@ -21,7 +21,8 @@ You can change the projection version by your desire !
 
 Sample given map 
 
-..
+![image](https://github.com/sezarfen/42FDF/assets/110563468/9f08fcb6-bec4-406e-8fbb-0337c58299d5)
+
 ## Don't forget to compile with thoose libraries
 
  - [libft (include get_next_line)](https://github.com/sezarfen/42Libft)
