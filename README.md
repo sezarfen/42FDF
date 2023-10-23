@@ -31,3 +31,4 @@ Sample given map
  - [ft_printf](https://github.com/sezarfen/42ft_printf)
  - [minilibx](https://github.com/42Paris/minilibx-linux)
 
+## UPDATE!, now you can clone and start to use it directly in Linux (linux keycodes are used to navigate map)
