@@ -32,3 +32,9 @@ Sample given map
  - [minilibx](https://github.com/42Paris/minilibx-linux)
 
 ## UPDATE!, now you can clone and start to use it directly in Linux (linux keycodes are used to navigate map)
+
+```bash
+  sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-dev
+```
+
+Will install packages that you need.
